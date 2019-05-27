@@ -247,3 +247,10 @@ a+b##error due to the size
 a=c(1,3,5)
 b=c(1,2,3,4, 'y',5,6)
 a+b##error due to the size
+
+
+a=1:5
+b=a
+b
+b[1]=10
+a #copied by value
