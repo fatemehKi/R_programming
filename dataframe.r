@@ -168,3 +168,22 @@ v5=as.vector(v4)
 is.vector(v5) #it is a vector.. 
 ############### data frame can not be converted to vector but from matrix it can be conevrted to vector
 #so from data frame -> matrix  -> vector (all elemnts in the matrix in the same line in the vector)
+
+Sepal.Length #error because the vector is not defined
+
+
+### we can attache only one data frame at once.. attach works with dataframe and list.. 
+#we don't need to call the name of data frame if we already attach the data frame
+
+v1=c('john', 'marry', 'larry', 'lucy')
+v2=c(19,21,18, 22)
+v3=c('m', 'f', 'm', 'f')
+v4=c(88,92, 78, 80)
+mydata= data.frame(name=v1, age=v2, gender=v3, mark=v4)
+name #error
+mydata$name
+
+attach(mydata)
+name
+detach(mydata)
+name
