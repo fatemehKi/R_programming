@@ -23,7 +23,7 @@ rownames(my_frame)
 rownames(my_frame) <- 1:5
 rownames(my_frame)
 
-X <- matrix(seq(10,1000,10),10,10)    #Create a 10 x 10 matrix
+X <- matrix(seq(10,1000,10),10,10)    #Create a 10 x 10 matrix.. seq(from 10 to 1000 step is 10 )
 
 X_frame <- as.data.frame(X)           #Turn the matrix into a data frame
 
