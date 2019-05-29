@@ -98,7 +98,7 @@ print(v)
 #----------------------------
 #Add Row
 
-# Create the first data frame.
+# Create the first data frame... in R when we go to the first parantesis and run.. it will run till the end of paranthesis
 emp.data <- data.frame(
 emp_id = c (1:5), 
 emp_name = c("Rick","Dan","Michelle","Ryan","Gary"),
@@ -110,7 +110,7 @@ dept = c("IT","Operations","IT","HR","Finance"),
 stringsAsFactors = FALSE
 )
 
-# Create the second data frame
+# Create the second data frame... in R when we go to the first parantesis and run.. it will run till the end of paranthesis
 emp.newdata <- 	data.frame(
 emp_id = c (6:8), 
 emp_name = c("Rasmi","Pranab","Tusar"),
