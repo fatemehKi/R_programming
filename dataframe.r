@@ -185,5 +185,13 @@ mydata$name
 
 attach(mydata)
 name
+age=age+mark #it doesnot update the data frame
+mydata$age=mydata$age+mydata$mark #it does update the data frame
+
 detach(mydata)
 name
+
+##when we are merging the data frame we use cbine if we want to have A | B therefore we should have the 
+#same number of rows.. increasing the information of each row
+##when we are merging the data frame we use rbine if we want to have A/B therefore we should have the
+#same columns.. even the name needed to be the same.. we are 
