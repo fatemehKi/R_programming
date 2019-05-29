@@ -52,7 +52,7 @@ cars[ ,6]   # Get the 6th column
 cars["Mazda RX4", ]   # Get a row by using its name
 cars[ ,"mpg"]   # Get a column by using its name
 cars[(cars$mpg > 25), ]   # Get rows where mpg is greater than 25
-subset(cars, (mpg > 20) & (hp > 70))   # Subset with over 20 mpg and 70 horsepower
+subset(cars, (mpg > 20) & (hp > 70))   # Subset with over 20 mpg and 70 horsepower.. we didn't use select meaning everything
 cars$vs <- NULL     # Drop the column "vs"
 
 cars$carb <- NULL   # Drop the column "carb"
