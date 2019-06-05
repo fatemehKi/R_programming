@@ -44,3 +44,33 @@ sort(x, na.last=NA)
 g= data.frame(a=c(1,5,7,NA), b=c(5,NA, 65,8))
 na.fail(g) #if there is a missing value it will give you error message
 na.pass(g) 
+
+#---------------------------------------------
+# sorting examples using the mtcars dataset
+attach(mtcars)
+head(mtcars)
+# sort by mpg.. the whole row is sorted based on the mpg
+newdata = mtcars[order(mpg),] #order function inside the slice will give us the sorted 
+head(newdata)
+# sort by mpg and cyl
+newdata = mtcars[order(mpg, cyl),] #the order is important here.. if there are some rows sharing the same value for the mpg, we look at cyl
+dim(newdata)
+#sort by mpg (ascending) and cyl (descending)
+newdata <- mtcars[order(mpg, -cyl),]  #cyl in the decreasing order.. if we want both in the decreasing order we use -mpg and
+head(newdata)
+detach(mtcars)
+
+rank(mpg)
+
+
+x=c(10,7,11,8)
+sort(x)
+rank(x) #it assigns a rank to show the ranking orders from 1, 2, 3
+order(x) #we rarely use it.. it is mixing sort and rank at the same time.. showing the index of the smallest to the highest 
+
+#order in the data frame is acually sorting in the vector, matrix, array.. we order the column
+order(mtcars)
+
+rank(c(1,'a', TRUE)) #in the character ranking we start with number and then small char and then capital chars
+sort(c(1,'a', TRUE))
+sort(c(1, 'a', '2rr')) 
