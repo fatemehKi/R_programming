@@ -1,76 +1,49 @@
 '''
-- handling missing data 
-- sort(x) == sort(x, na.last=NA)
+-merge data 
 '''
 
-x=c(1,2,NA,3)
-is.na(x)
-complete.cases(x)# if there is a missing value it will give you a FALSE.. opposite to the is.na function.. in the dataframe it checks the row
+paste('the life of', pi)# the sep argument as default is space
 
-df=data.frame(a=c(1,2,3), b=c(1,2,3))
-df
-is.na(df) #it shows false for every element.. same size of the input
-complete.cases(df) #three element in the output, one for each row
+paste('I', 'Love', 'R', sep = '-')
 
-#for the columns, we need to use is.na
+#pasting a single element with the vector
+paste('X', 1:5, sep='.') #"X.1" "X.2" "X.3" "X.4" "X.5".. the output has multiple component
 
-df2=data.frame(a=c(1,2,NA), b=c(1,2,3))
-df2
-is.na(df2) #it shows false for every element.. same size of the input df
-complete.cases(df2) #checks rowby row
+paste(1:3, c('!', '?', '+'), sep='', collapse = '')#no repetation but every element goes with each.. both should have the same length
+#"1!2?3+".. collapse will give you the output in a joint type
+paste(1:3, c('!', '?', '+'), sep='')
 
-## removing the rows with the missing value
-df2[complete.cases(df2),]
-df2[!complete.cases(df2),]
+evalue=paste("the value of 'e' is", exp(1), NA ) # you can paas function as a paramter and NA does not need quotation
+evalue
 
-## removing the missing.. element and the row.. it doesn't inplace 
-na.omit(x)
-na.omit(df2) #removing the whole row
-na.exclude(x)
-na.exclude(df2) #removing the whole row
+paste0('lets', 'collapse', 'these', 'words') #works like concatination func in python and it makes no space
 
-###sort function with the NA value.. the default approach is just ignoring the NA
-x=c(11, 3, 55, 7, 13, 23)
-length(x)
-length(x)=7
-x
-sort(x) #the default approach is just ignoring the NA and is not in the sorted vector
-sort(x,na.last = TRUE) #na.last itself makes NA visible at the output.. now we decide either at the end
-sort(x,na.last = FALSE) #or at the beggining
-sort(x, na.last=NA)
-## sort(x) == sort(x, na.last=NA)
+paste('lets', 'collapse', 'these', 'words') #space exists
 
-######## sorting in the 
-g= data.frame(a=c(1,5,7,NA), b=c(5,NA, 65,8))
-na.fail(g) #if there is a missing value it will give you error message
-na.pass(g) 
+X=' a data'
+paste('I am', X , 'science')
 
-#---------------------------------------------
-# sorting examples using the mtcars dataset
-attach(mtcars)
-head(mtcars)
-# sort by mpg.. the whole row is sorted based on the mpg
-newdata = mtcars[order(mpg),] #order function inside the slice will give us the sorted 
-head(newdata)
-# sort by mpg and cyl
-newdata = mtcars[order(mpg, cyl),] #the order is important here.. if there are some rows sharing the same value for the mpg, we look at cyl
-dim(newdata)
-#sort by mpg (ascending) and cyl (descending)
-newdata <- mtcars[order(mpg, -cyl),]  #cyl in the decreasing order.. if we want both in the decreasing order we use -mpg and
-head(newdata)
-detach(mtcars)
+########merge vs cbind (rbind).. we need the matching columns for merge not rbind (cbine)
+##columns of two data set must be the same, otherwise they can not be rbind
 
-rank(mpg)
+##create a matrix
+x=cbind(c(1,2,3), c(4,5,6))
+t(x) #transpose
 
+#cbind.fill itself fill the empty values with repeating the values from the begining but cbind.fill (.. fill=NA)
+#saying that the emptyelements with the NA
+install.packages(rowr)
+install.packages(plyr)
+library(rowr)
+library(plyr)
 
-x=c(10,7,11,8)
-sort(x)
-rank(x) #it assigns a rank to show the ranking orders from 1, 2, 3
-order(x) #we rarely use it.. it is mixing sort and rank at the same time.. showing the index of the smallest to the highest 
+x=cbind(c(1), c(4,5,6)) #repeats the 1
+x=cbind.fill(c(1), c(4,5,6))
+cbind.fill(c(1,2,3),list(1,2,3),cbind(c('a','b')),'a',df)
 
-#order in the data frame is acually sorting in the vector, matrix, array.. we order the column
-order(mtcars)
-
-rank(c(1,'a', TRUE)) #in the character ranking we start with number and then small char and then capital chars
-sort(c(1,'a', TRUE))
-sort(c(1, 'a', '2rr')) 
+mydata1 <- data.frame(index=c("A","B","C"), var1=5:7)
+mydata2 <- data.frame(var1=8:10, species=c("one","two","three"))
+# smartbind the dataframes together
+library(plyr)
+rbind.fill(mydata1, mydata2) # we need to have index from the first and species from the second
+##merge for data frames is more meaningful compare to the bind
