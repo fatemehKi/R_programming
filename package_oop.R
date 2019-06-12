@@ -1,3 +1,4 @@
+
 '''
 - we are creating a package and objects today
 - packages in microsoft is called add-in
@@ -7,7 +8,7 @@
 new.packages() #will show all available packages 
 update.packages() #updating the packages with the latest version
 
- #views are packages that been classified by tasks.. field
+#views are packages that been classified by tasks.. field
 install.views("Econometrics") #error because we have to install ctv
 install.packages("ctv")
 library('ctv')
@@ -110,3 +111,30 @@ grade.student=function(obj){
 }
 
 grade(s3)
+
+##### S4 OOP class
+setClass('student', slots=list(name='character', age='numeric', GPA = 'numeric'))
+
+s=new('student', name='John', age=21, GPA=3.5)
+
+##user defined function
+setMethod('show',
+          'student',
+          function(object){
+            cat(object@name, '\n')
+            cat(object@age, 'year old \n')
+            cat("GPA:", object@GPA, "\n")
+          })
+
+s=new('student', name='John', age=21, GPA=3.5)
+s
+
+##another method from the same class
+setMethod('show_new',
+          'student',
+          function(object){
+            cat(object@name, '\n')
+            cat("GPA:", object@GPA, "\n")
+          })
+  
+)
