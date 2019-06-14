@@ -1,6 +1,30 @@
+help(mtcars)
+
+require(graphics)
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
+
+
+mtcars2 <- within(mtcars, {
+  vs <- factor(vs, labels = c("V", "S"))
+  am <- factor(am, labels = c("automatic", "manual"))
+  cyl  <- ordered(cyl)
+  gear <- ordered(gear)
+  carb <- ordered(carb)
+})
+summary(mtcars2)
+str(mtcars2)
+summary(mtcars)
+## motor trend cars
+mtcars_rf <- rfsrc(mpg ~ ., data = mtcars)
+
+plot.gg_rfsrc(mtcars_rf)
+plot.gg_error(mtcars_rf)
+
 
 getwd()
-setwd("C:\\Users\\tjaber\\Desktop\\R for Data Analytics")
+setwd("C:\\uber")
 # Open a pdf file
 my_data<-mtcars
 pdf("rplot.pdf")
@@ -9,8 +33,12 @@ plot(x = my_data$wt, y = my_data$mpg,
      pch = 16, frame = TRUE,
      xlab = "wt", ylab = "mpg", col = "#2E9FDF")
 # Close the pdf file
-dev.off()
+plot(x = my_data$disp, y = my_data$wt,
+     pch = 16, frame = TRUE,
+     xlab = "Disp", ylab = "wt", col = "#2E9FDF")
 
+dev.off()
+my_data
 
 # 1. Open jpeg file
 jpeg("rplot.jpg", width = 350, height = 350)
@@ -397,13 +425,12 @@ barplot(counts, main="Car Distribution by Gears and VS",
   boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",
           xlab="Number of Cylinders", ylab="Miles Per Gallon")
 
-
 # Notched Boxplot of Tooth Growth Against 2 Crossed Factors
 # boxes colored for ease of interpretation
 boxplot(len~supp*dose, data=ToothGrowth, notch=TRUE,
         col=(c("gold","darkgreen")),
         main="Tooth Growth", xlab="Suppliment and Dose")
-
+ToothGrowth
 
 
 # Violin Plots
@@ -411,6 +438,8 @@ library(vioplot)
 x1 <- mtcars$mpg[mtcars$cyl==4]
 x2 <- mtcars$mpg[mtcars$cyl==6]
 x3 <- mtcars$mpg[mtcars$cyl==8]
+x1
+
 vioplot(x1, x2, x3, names=c("4 cyl", "6 cyl", "8 cyl"), col="gold")
 title("Violin Plots of Miles Per Gallon")
 
@@ -420,7 +449,7 @@ library(aplpack)
 attach(mtcars)
 bagplot(wt,mpg, xlab="Car Weight", ylab="Miles Per Gallon",
         main="Bagplot Example")
----------------------------------------------
+#---------------------------------------------
 
   x <- c(1.2,3.4,1.3,-2.1,5.6,2.3,3.2,2.4,2.1,1.8,1.7,2.2)
 y <- c(2.4,5.7,2.0,-3,13,5,6.2,4.8,4.2,3.5,3.7,5.2)
@@ -476,7 +505,7 @@ lines(x, z, type="b", pch=22, col="blue", lty=2)
 axis(2, at=x,labels=x, col.axis="red", las=2)
 
 # draw an axis on the right, with smaller text and ticks
-axis(4, at=z,labels=round(z,digits=2),
+axis(4, at=z,labels=round(z,digits=0),
 col.axis="blue", las=2, cex.axis=0.7, tck=-.01)
 
 # add a title for the right axis
@@ -485,7 +514,7 @@ mtext("y=1/x", side=4, line=3, cex.lab=1,las=2, col="blue")
 # add a main title and bottom and left axis labels
 title("An Example of Creative Axes", xlab="X values",
 ylab="Y=X")
----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 
 # 4 figures arranged in 2 rows and 2 columns
 attach(mtcars)
@@ -553,7 +582,7 @@ points(x,y, pch = 19, col = my_cols[iris$Species])
 pairs(iris[,1:4], lower.panel = panel.cor, upper.panel = upper.panel)
 
 
-Add correlations on the scatter plots:
+#Add correlations on the scatter plots:
 # Customize upper panel
 upper.panel<-function(x, y){
 points(x,y, pch=19, col=c("red", "green3", "blue")[iris$Species])
@@ -565,7 +594,7 @@ text(0.5, 0.9, txt)
 }
 pairs(iris[,1:4], lower.panel = NULL,
 upper.panel = upper.panel)
---------------------------------------------------
+#--------------------------------------------------
 
 
 
