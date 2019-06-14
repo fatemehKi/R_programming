@@ -1,3 +1,4 @@
+
 '''
 - graphics in R
 -if we change a default in one plot.. the rest is going to be effected.. to keep it as default
@@ -23,4 +24,31 @@ count = table(mtcars$gear)
 barplot(count, main='car dist')
 
 count = table(iris$Species)
-barplot(count, main='car dist') 
+barplot(count, main='car dist')
+
+##to get the plot poping out outside and not inline
+attach(mtcars)
+windows() #create a windows to plot
+plot(mpg,wt)
+
+##to clearning the plots
+dev.off() #any device in the r invironment.. even pdf
+
+graphics.off() # graphs specifically
+
+### we are running high level the plots, point will be adding plots to previous plots
+
+# Example of labeling points..
+
+attach(mtcars)
+window()
+plot(wt, mpg, main="Milage vs. Car Weight", xlab="Weight", ylab="Mileage", pch=18, col="blue")
+text(wt, mpg, row.names(mtcars), cex=0.6, pos=4, col="red") 
+
+
+install.packages('ggplot2') ## r studio 3.6
+library(ggplot2)
+
+
+
+
