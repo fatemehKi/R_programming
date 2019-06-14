@@ -23,4 +23,4 @@ count = table(mtcars$gear)
 barplot(count, main='car dist')
 
 count = table(iris$Species)
-barplot(count, main='car dist')
+barplot(count, main='car dist') 
