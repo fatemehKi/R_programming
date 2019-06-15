@@ -2,6 +2,7 @@
 
 install.packages('ggplot2')
 library(ggplot2)
+library(plotrix)
 
 ##############Loading Data############################
 MyData = read.csv(file="D:\\Metro College\\R\\Project\\bank.csv", header=TRUE, sep=",")
@@ -38,18 +39,47 @@ detach(j)
 attach(MyData)
 Education=table(education)
 e=as.data.frame(Education)
-library(plotrix)
+
 windows()
 slices=as.vector(e$Freq) 
-
 lbls=as.vector(e$education)
 pct <- round(e$Freq/sum(e$Freq)*100)
-lbls <- paste(lbls, pct) # add percents to labels
-lbls <- paste(lbls,"%",sep="") # ad % to labels
+lbls_p <- paste(pct,"%",sep="") # ad % to labels
 
-#
+pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Level of Education")
+legend("topright", lbls, cex = 1.2, fill = c(rainbow(4)))
 
-pie3D(slices, labels=lbls,explode=0.1, main="Level of Education")
+
+##################Q4###################################
+### How many percent have loan
+tab4=table(loan)
+l=as.data.frame(tab4)
+
+windows()
+slices=as.vector(l$Freq) 
+lbls=as.vector(l$loan)
+pct <- round(l$Freq/sum(l$Freq)*100)
+lbls_p <- paste(pct,"%",sep="") # ad % to labels
+
+pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Has a Loan from Bank")
+legend("topright", lbls, cex = 1.2, fill = c(rainbow(2)))
+
+
+
+##################Q5###################################
+### How many percent in each education have loan
+tab5=table(loan, education )
+le=as.data.frame(tab5)
+
+windows()
+slices=as.vector(le$Freq) 
+lbls=c(le$education, le$loan)
+pct <- round(le$Freq/sum(le$Freq)*100)
+lbls_p <- paste(pct,"%",sep="") # ad % to labels
+
+pie(slices, labels= lbls_p, main="Level of Education", col=c('red', 'red3','green', 'green3','cyan', 'cyan3', 'blue', 'blue3'))
+legend(-2,1, legend=c('no loan-primary Ed.','yes loan-primary Ed.','no loan-secondary Ed.','yes loan-secondary Ed.','no loan-tertiary Ed.','yes loan-tertiary Ed.','no loan-unknown Ed.','yes loan-unkown Ed.'), cex = 1.2, fill = c('red', 'red3','green', 'green3',   'cyan', 'cyan3', 'blue', 'blue3'))
+
 
 
 
