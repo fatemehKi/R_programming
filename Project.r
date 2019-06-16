@@ -21,7 +21,7 @@ Ages=table(age) #FI
 
 ##plotting the result
 windows()
-ggplot(MyData, aes(x=age))+geom_histogram(aes(y=..density..), colour='red', fill='red')+geom_density(alpha=0.2,fill='black')
+ggplot(MyData, aes(x=age))+geom_histogram(aes(y=..density..), colour='red', fill='red')+geom_density(alpha=0.2,fill='black')+theme(axis.text = element_text(size = 25))+ theme(axis.title = element_text(size = 30))
 
 ##################Q2###################################
 ### What are the "type of the job" of the contacted customres and the population of each
@@ -33,8 +33,8 @@ detach(MyData)
 attach(j)
 windows()
 p=ggplot(j, aes(x=Type_of_the_Job, y=Population))+geom_bar(stat = 'identity', color='blue', fill='blue')+coord_flip()
-p=p + theme(axis.text = element_text(size = 18)) # changes axis labels
-p + theme(axis.title = element_text(size = 20)) # change axis titles
+p=p + theme(axis.text = element_text(size = 25)) # changes axis labels
+p + theme(axis.title = element_text(size = 30)) # change axis titles
 detach(j)
 
 ##################Q3###################################
@@ -50,7 +50,7 @@ pct <- round(e$Freq/sum(e$Freq)*100)
 lbls_p <- paste(pct,"%",sep="") # ad % to labels
 
 pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Level of Education")
-legend("topright", lbls, cex = 1.2, fill = c(rainbow(4)))
+legend("topright", lbls, cex = 1.4, fill = c(rainbow(4)))
 
 ##################Q4###################################
 ### How many percent have loan
@@ -63,7 +63,7 @@ lbls=as.vector(l$loan)
 pct <- round(l$Freq/sum(l$Freq)*100)
 lbls_p <- paste(pct,"%",sep="") # ad % to labels
 
-pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Has a Loan from Bank")+legend("topright", lbls, cex = 1.2, fill = c(rainbow(2)))
+pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Has a Loan from Bank")+legend("topright", lbls, cex = 1.4, fill = c(rainbow(2)))
 
 ##################Q5###################################
 ### How many percent in each type of the job have loan
@@ -108,7 +108,7 @@ lbls=as.vector(h$housing)
 pct <- round(h$Freq/sum(h$Freq)*100)
 lbls_p <- paste(pct,"%",sep="") # ad % to labels
 
-pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Owning a House")+legend("topright", lbls, cex = 1.2, fill = c(rainbow(2)))
+pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Owning a House")+legend("topright", lbls, cex = 1.4, fill = c(rainbow(2)))
 
 ##################Q8###################################
 ### How many percent in each type of the job has house
@@ -145,26 +145,27 @@ legend(1,1, legend=c('no housing-primary Ed.','yes housing-primary Ed.','no hous
 ################Q10###################################
 ###the population of the contacts among different campagin
 attach(MyData)
+summary(campaign)
 tab7=table(campaign)
 cam=as.data.frame(tab7)
 Campaign_Number=cam$campaign
 Number_of_Contact=cam$Freq
 windows()
-qplot( Campaign_Number, Number_of_Contact, size=2)+theme(axis.text=element_text(size=12),
-      axis.title=element_text(size=20))
+qplot( Campaign_Number, Number_of_Contact, size=1)+theme(axis.text = element_text(size = 10))+ theme(axis.title = element_text(size = 30))
+      
 
 ################Q11###################################
 ###the population of the contacts duration among different education
 attach(MyData)
 dev.off()
 windows()
-ggplot(MyData, aes(x=job, y=duration) )+geom_boxplot(fill='#56B4E9', color='blue')+coord_flip()+ylim(10,800)+theme(axis.text = element_text(size = 15))+theme(axis.title = element_text(size = 18))
+ggplot(MyData, aes(x=job, y=duration) )+geom_boxplot(fill='#56B4E9', color='blue')+coord_flip()+ylim(10,800)+theme(axis.text = element_text(size = 25))+theme(axis.title = element_text(size = 30))
 
 ################Q12###################################
 ###the population of the contacts duration among different education
 attach(MyData)
 windows()
-ggplot(MyData, aes(x=education, y=duration) )+geom_boxplot(fill='green2', color='green4')+coord_flip()+ylim(10,800)+theme(axis.text = element_text(size = 15))+theme(axis.title = element_text(size = 18))
+ggplot(MyData, aes(x=education, y=duration) )+geom_boxplot(fill='green2', color='green4')+coord_flip()+ylim(10,800)+theme(axis.text = element_text(size = 25))+theme(axis.title = element_text(size = 30))
 
 
 ################Q13###################################
@@ -178,13 +179,13 @@ lbls=as.vector(m$marital)
 pct <- round(m$Freq/sum(m$Freq)*100)
 lbls_p <- paste(pct,"%",sep="") # ad % to labels
 
-pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Marital Status")+legend("topright", lbls, cex = 1.2, fill = c(rainbow(3)))
+pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Marital Status")+legend("topright", lbls, cex = 1.4, fill = c(rainbow(3)))
 
 ################Q14###################################
 ###the population of the contacts duration among different marital status
 attach(MyData)
 windows()
-ggplot(MyData, aes(x=marital, y=duration) )+geom_boxplot(fill='red', color='red4')+coord_flip()+ylim(10,800)+theme(axis.text = element_text(size = 15))+theme(axis.title = element_text(size = 18))
+ggplot(MyData, aes(x=marital, y=duration) )+geom_boxplot(fill='red', color='red4')+coord_flip()+ylim(10,800)+theme(axis.text = element_text(size = 25))+theme(axis.title = element_text(size = 30))
 
 ##################Q15###################################
 #### What is the "balance" population (density) of the customers that been contacted
@@ -194,6 +195,27 @@ Balance=table(balance) #FI
 ##plotting the result
 windows()
 ggplot(MyData, aes(x=balance))+geom_histogram(aes(y=..density..), colour='red', fill='red')+geom_density(alpha=0.2,fill='black')
+
+##################Q16###################################
+#### What is the "month" population that the customers been contacted
+tab16=table(MyData$month)
+mo=data.frame(tab16)
+colnames(mo)=c('Month', 'Population')
+attach(mo)
+windows()
+ggplot(data=mo, aes(x=Month, y=Population))+geom_bar(stat = 'identity', fill='green2')+theme(axis.text = element_text(size = 25))+ theme(axis.title = element_text(size = 30))
+
+
+
+##################Q17###################################
+#### What is the duration of call population (density) of the customers 
+summary(duration) 
+
+##plotting the result
+windows()
+ggplot(MyData, aes(x=duration))+geom_histogram(aes(y=..density..), colour='red', fill='red')+geom_density(alpha=0.2,fill='black')+theme(axis.text = element_text(size = 25))+ theme(axis.title = element_text(size = 30))+xlim(0,1500)
+
+
 
 ################################################################output relations#########################
 MyData$Output=ifelse(MyData$y=='yes', 1, 0)
