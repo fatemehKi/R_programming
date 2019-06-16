@@ -198,55 +198,115 @@ ggplot(MyData, aes(x=balance))+geom_histogram(aes(y=..density..), colour='red', 
 ################################################################output relations#########################
 MyData$Output=ifelse(MyData$y=='yes', 1, 0)
 
-##################Q16###################################
-### the relationship between the output and age
+########################################################
+###Heatmap
+job_=as.numeric(as.factor(MyData$job))
+marital_=as.numeric(as.factor(MyData$marital))
+education_=as.numeric(as.factor(MyData$education))
+housing_=as.numeric(as.factor(MyData$housing))
+loan_=as.numeric(as.factor(MyData$loan))
+month_=as.numeric(as.factor(MyData$month))
+
+
+
+df=data.frame(MyData[, c('age',  'balance', 'duration', 'Output')], job_, marital_, education_, housing_, loan_, month_)
+ds=head(df, n=1000)
+ds=as.matrix(ds)
 windows()
-qplot(age, Output, data=MyData, colour='red')+theme(axis.text=element_text(size=12),
-                                                 axis.title=element_text(size=20))
+heatmap(ds)
+
+
+##################Q16###################################
+### population of the accepted offer
+tab17=table(y)
+o=as.data.frame(tab17)
+
+windows()
+slices=as.vector(O$Freq) 
+lbls=as.vector(o$y)
+pct <- round(oj$Freq/sum(o$Freq)*100)
+lbls_p <- paste(pct,"%",sep="") # ad % to labels
+
+pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Accepting the Offer")+legend("topright", lbls, cex = 1.2, fill = c(rainbow(2)))
 
 ##################Q17###################################
-### the relationship between the output and type of the job
-tab17=table(Output)
-h=as.data.frame(tab17)
+### the relationship between the output and age
+windows()
+qplot(age, Output, data=MyData, colour='red')+theme(axis.text=element_text(size=12), axis.title=element_text(size=20))
+chi_data_age=data.frame(MyData$age,MyData$Output)
+chisq.test(chi_data_age) ##X-squared = 42497, df = 45210, p-value = 1
+
+##################Q18###################################
+### How many percent in each type of the job has accepted the offer
+tab18=table(y,  job)
+oj=as.data.frame(tab18)
+
+oj2=group_by(oj, job) %>% mutate(percent = (Freq*100)/sum(Freq))
+as.data.frame(oj2)
+ma=max(oj2$percent[which(oj2$y=='yes')])
+oj2[which(oj2$percent==ma),]
+mi=min(oj2$percent[which(oj2$y=='yes')])
+oj2[which(oj2$percent==mi),]
 
 windows()
-slices=as.vector(h$Freq) 
-lbls=as.vector(h$housing)
-pct <- round(h$Freq/sum(h$Freq)*100)
+plot_ly(oj, type = "bar", orientation = "h", name = ~oj$y, x = ~oj$Freq,  y = ~oj$job) %>%
+  layout(hj, barmode = "relative", xaxis = list(title = "Population"), yaxis = list(title = "Type of the Job" ))
+
+#cor.test(job, y, method=c("pearson"))
+
+##################Q19###################################
+### How many percent in each education have accepted offer
+tab19=table(y, education)
+oe=as.data.frame(tab19)
+
+slices=as.vector(oe$Freq) 
+lbls=c(oe$education, oe$loan)
+pct <- round(oe$Freq/sum(oe$Freq)*100)
 lbls_p <- paste(pct,"%",sep="") # ad % to labels
 
-pie3D(slices, labels= lbls_p, explode=0.1,  minsep=0.3,  main="Owning a House")+legend("topright", lbls, cex = 1.2, fill = c(rainbow(2)))
 
-##################Q8###################################
-### How many percent in each type of the job has house
-tab8=table(housing,  job)
-hj=as.data.frame(tab8)
-
-hj2=group_by(hj, job) %>% mutate(percent = (Freq*100)/sum(Freq))
-as.data.frame(hj2)
-ma=max(hj2$percent[which(hj2$housing=='yes')])
-hj2[which(hj2$percent==ma),]
-mi=min(hj2$percent[which(hj2$housing=='yes')])
-hj2[which(hj2$percent==mi),]
-
-
-windows()
-plot_ly(hj, type = "bar", orientation = "h", name = ~hj$housing, x = ~hj$Freq,  y = ~hj$job, color=~housing) %>%
-  layout(hj, barmode = "relative", xaxis = list(title = "Population"), yaxis = list(title = "Type of the Job" ), color=c('red', 'green'))
-
-##################Q9###################################
-### How many percent in each education have house
-tab9=table(housing, education )
-he=as.data.frame(tab9)
-
-slices=as.vector(he$Freq) 
-lbls=c(he$education, he$loan)
-pct <- round(he$Freq/sum(he$Freq)*100)
-lbls_p <- paste(pct,"%",sep="") # ad % to labels
+oe2=group_by(oe, education) %>% mutate(percent = (Freq*100)/sum(Freq))
+as.data.frame(oe2)
+ma=max(oe2$percent[which(oe2$y=='yes')])
+oe2[which(oe2$percent==ma),]
+mi=min(oe2$percent[which(oe2$y=='yes')])
+oe2[which(oe2$percent==mi),]
 
 windows()
 pie(slices, labels= lbls_p, main="Level of Education", col=c('red', 'red3','green', 'green3','cyan', 'cyan3', 'blue', 'blue3'))
-legend(1,1, legend=c('no housing-primary Ed.','yes housing-primary Ed.','no housing-secondary Ed.','yes housing-secondary Ed.','no housing-tertiary Ed.','yes housing-tertiary Ed.','no housing-unknown Ed.','yes housing-unkown Ed.'), cex = 1.2, fill = c('red', 'red3','green', 'green3',   'cyan', 'cyan3', 'blue', 'blue3'))
+legend(1,1, legend=c('not accepted-primary Ed.','accepted-primary Ed.','not accepted-secondary Ed.','accepted-secondary Ed.','not accepted-tertiary Ed.','accepted-tertiary Ed.','not accepted-unknown Ed.','accepted-unkown Ed.'), cex = 1.2, fill = c('red', 'red3','green', 'green3',   'cyan', 'cyan3', 'blue', 'blue3'))
+
+##################Q20###################################
+### How many percent in each education have accepted offer
+tab20=table(y, education)
+oe=as.data.frame(tab19)
+
+slices=as.vector(oe$Freq) 
+lbls=c(oe$education, oe$loan)
+pct <- round(oe$Freq/sum(oe$Freq)*100)
+lbls_p <- paste(pct,"%",sep="") # ad % to labels
+
+
+oe2=group_by(oe, education) %>% mutate(percent = (Freq*100)/sum(Freq))
+as.data.frame(oe2)
+ma=max(oe2$percent[which(oe2$y=='yes')])
+oe2[which(oe2$percent==ma),]
+mi=min(oe2$percent[which(oe2$y=='yes')])
+oe2[which(oe2$percent==mi),]
+
+windows()
+pie(slices, labels= lbls_p, main="Level of Education", col=c('red', 'red3','green', 'green3','cyan', 'cyan3', 'blue', 'blue3'))
+legend(1,1, legend=c('not accepted-primary Ed.','accepted-primary Ed.','not accepted-secondary Ed.','accepted-secondary Ed.','not accepted-tertiary Ed.','accepted-tertiary Ed.','not accepted-unknown Ed.','accepted-unkown Ed.'), cex = 1.2, fill = c('red', 'red3','green', 'green3',   'cyan', 'cyan3', 'blue', 'blue3'))
+
+
+##################Q21###################################
+### relationship between the duration of time and offer acceptance
+windows()
+qplot(duration, Output, data=MyData, colour='blue')+theme(axis.text=element_text(size=12), axis.title=element_text(size=20))+xlim(10,100)
+chi_data_duration=data.frame(MyData$duration,MyData$Output)
+chisq.test(chi_data_duration) ##t = 91.289, df = 45209, p-value < 2.2e-16
+cor.test(duration, MyData$Output, method=c("pearson"))
+
 
 
 
