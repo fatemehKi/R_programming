@@ -3,7 +3,6 @@
 - apply family.. the main difference is the type of input that they take
 -apply.. the second argument is margin which is not optional
 - NULL is different than NA.. it is not a value but NA and NAN are special value but they are not a number
-
 '''
 
 x=seq(1:10)
