@@ -117,7 +117,7 @@ setClass('student', slots=list(name='character', age='numeric', GPA = 'numeric')
 
 s=new('student', name='John', age=21, GPA=3.5)
 
-##user defined function
+##user defined function 
 setMethod('show',
           'student',
           function(object){
