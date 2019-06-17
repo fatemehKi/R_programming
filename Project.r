@@ -1,4 +1,11 @@
-
+'''
+/**
+  * @file Project.r 
+  * @The goal of the project is to explore data for the bank marketing in R
+  * @author fatemeh Kiaie
+  * @Contact: f.kiaie@gmail.com
+**/
+'''
 
 install.packages('ggplot2')
 library(ggplot2)
@@ -331,7 +338,13 @@ cor.test(duration, MyData$Output, method=c("pearson"))
 
 
 
+##################Q22###################################
+### density function for the duration of time among those that accepted offer
+duration_accepted=MyData$duration[MyData$y=='yes']
+df22=data.frame(duration_accepted,MyData$y[MyData$y=='yes'])
 
+windows()
+ggplot(df22, aes(x=duration_accepted))+geom_histogram(aes(y=..density..), colour='red', fill='red')+geom_density(alpha=0.2,fill='black')+theme(axis.text = element_text(size = 25))+ theme(axis.title = element_text(size = 30))
 
 
 
