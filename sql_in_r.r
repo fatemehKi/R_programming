@@ -41,6 +41,12 @@ a7=sqldf('select gender, avg(age) as avgage, avg(tenure)
          having avgage>45')
 a7
 
+a77=sqldf('select gender, avg(age) as avgage, avg(tenure) 
+         from emp 
+         group by gender')
+a77
+
+
 a8= sqldf('select avg(income) as meanincome from emp')
 a8
 
@@ -81,3 +87,4 @@ pundat=sqlQuery(myconn, 'select *from Punishment')
 close(myconn)
 
 
+ 
