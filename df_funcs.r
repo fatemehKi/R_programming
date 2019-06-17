@@ -1,5 +1,5 @@
 '''
--merge data 
+-merge data
 '''
 
 paste('the life of', pi)# the sep argument as default is space
